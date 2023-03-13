@@ -28,7 +28,7 @@ int     ft_atoi(const char *str)
 }
 
 
-void	send_signal(char c, int pid)
+void	send_signal(int c, int pid)
 {
 	int bit;
 
@@ -40,6 +40,7 @@ void	send_signal(char c, int pid)
 		else
 			kill(pid, SIGUSR2);
 		bit++;
+		usleep(500);
 	}
 	usleep(500);
 }
@@ -53,7 +54,7 @@ int	main(int argc, char **argv)
 	{
 		while(argv[2][x] != '\0')
 		{
-			send_signal(argv[2][x], ft_atoi(argv[1]));
+			send_signal((int)argv[2][x], ft_atoi(argv[1]));
 			x++;
 		}
 	send_signal('\n', ft_atoi(argv[1]));

@@ -42,12 +42,12 @@ void	receive_signal(int signal)
 	static int max_bytes;
 	static char c;
 	if (signal == SIGUSR1)
-       		c = c | (1 << max_bytes);
+       		c = c | (0x01 << max_bytes);
 	max_bytes++;
-	if (max_bytes = 8)
+	if (max_bytes == 8)
 	{
-		printf("%c", c);
-		//write(1, &c, 1);
+		//printf("%c", c);
+		write(1, &c, 1);
 		max_bytes = 0;
 		c = 0;
 	}
@@ -68,6 +68,6 @@ int	main(int argc, char **argv)
 	ft_putnbr(getpid());
 	signal(SIGUSR1, receive_signal);
 	signal(SIGUSR2, receive_signal);
-	pause();
+	while(1);
 	return(0);
 }
