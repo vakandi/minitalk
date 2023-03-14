@@ -56,10 +56,8 @@ void	receive_signal(int signal)
 
 int	main(int argc, char **argv)
 {
-	int pid;
-	int len;
-	char *s;
-
+	*argv = 0;
+	
 	if (argc > 1)
 	{
 		write(1, "Error Don't put any arguments\n", 10);
