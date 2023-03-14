@@ -1,5 +1,5 @@
 #!/bin/sh
-pid="16658"
+pid="$(ps -ax | grep "./server" | head -n 1 | awk '{ print $1 }')"
 emoji="🕵️"
 cp client client2
 cp client client3
