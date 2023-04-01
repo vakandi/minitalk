@@ -2,7 +2,7 @@
 sleep 3s
 pid="$(ps -ax | grep "./server" | head -n 1 | awk '{ print $1 }')"
 emoji="🕵️"
-loop=15
+loop=$1
 var=1
 ./client $pid " \
 	"
