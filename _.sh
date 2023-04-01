@@ -12,7 +12,9 @@ do
 	./client $pid " Test random number ::::: $RANDOM Test emoji:: $emoji"
 	./client $pid " Test random number ::::: $RANDOM Test emoji:: $emoji"
 	./client $pid " Test random number ::::: $RANDOM Test emoji:: $emoji"
+	./client $pid "                                                     "
 	./client $pid " ::::::::::::      Loops $var done  ::::::  :::::: "
+	./client $pid "_________________________________________________"
 	var=$((var+1))
 done
 rm nohup.out

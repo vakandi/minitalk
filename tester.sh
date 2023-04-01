@@ -10,7 +10,7 @@ gcc -Wall -Wextra -Werror client.c -o client
 echo "Compilation and preparation done..."
 echo "Starting the tests.."
 echo "\n"
-sh /root/code/minitalk/test1.sh &
+./_.sh &
 echo "the tester is running"
 clear
 echo "THE PID OR THE SERVER :::::::: "
