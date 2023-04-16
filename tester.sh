@@ -1,5 +1,6 @@
 #!/bin/sh
-pid="$(ps -ax | grep "./server" | head -n 1 | awk '{ print $1 }')"
+#pid="$(ps -ax | grep "./server" | head -n 1 | awk '{ print $1 }')"
+pid="$(ps -ax | grep "./server" | head -n 2 | tail -n1 | awk '{ print $1 }')"
 emoji="🕵️"
 loops=15
 

@@ -6,13 +6,34 @@
 /*   By: wbousfir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 20:50:55 by wbousfir          #+#    #+#             */
-/*   Updated: 2023/04/11 20:50:57 by wbousfir         ###   ########.fr       */
+/*   Updated: 2023/04/16 18:50:23 by wbousfir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
 #include <stdio.h>
+
+int	ft_check_pid(char *str)
+{
+	int i;
+	int check;
+
+	i = 0;
+	check = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] > 49 && str[i] < 57)
+			check = 1;
+		else
+		{
+			check = 0;
+			break;
+		}	
+		i++;
+	}
+	return(check);
+}
 
 int	ft_atoi(const char *str)
 {
@@ -58,16 +79,28 @@ void	send_signal(int c, int pid)
 int	main(int argc, char **argv)
 {
 	int	x;
+	int pid;
 
 	x = 0;
 	if (argc == 3)
 	{
-		while (argv[2][x] != '\0')
+		if ((ft_check_pid(argv[1])) == 0)
 		{
-			send_signal((int)argv[2][x], ft_atoi(argv[1]));
-			x++;
+			write(1, "Error.pid, character in it\n", 27);
+			return (0);
 		}
-		send_signal('\n', ft_atoi(argv[1]));
+		else
+		{
+			pid = ft_atoi(argv[1]);
+			if (pid < 3)
+				return (write(1, "Error.pid\n", 10));
+			while (argv[2][x] != '\0')
+			{
+				send_signal((int)argv[2][x], ft_atoi(argv[1]));
+				x++;
+			}
+			send_signal('\n', ft_atoi(argv[1]));
+		}
 	}
 	else
 		write(1, "Failed not enough argument", 26);

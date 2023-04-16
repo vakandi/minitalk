@@ -6,7 +6,7 @@
 /*   By: wbousfir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 20:54:29 by wbousfir          #+#    #+#             */
-/*   Updated: 2023/04/11 20:54:30 by wbousfir         ###   ########.fr       */
+/*   Updated: 2023/04/16 18:23:57 by wbousfir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,18 @@ size_t	ft_strlen(const char *s)
 	return (b);
 }
 
-void	receive_signal(int signal)
+void	receive_signal(int signal, siginfo_t *string, void *context)
 {
 	static int	max_bytes;
 	static char	c;
+	static int	pid;
 
+	context = NULL;
+	if (pid != string->si_pid)
+	{
+		max_bytes = 0;
+		c = 0;
+	}
 	if (signal == SIGUSR1)
 		c = c | (0x01 << max_bytes);
 	max_bytes++;
@@ -66,6 +73,8 @@ void	receive_signal(int signal)
 
 int	main(int argc, char **argv)
 {
+	struct sigaction	string;
+
 	*argv = 0;
 	if (argc > 1)
 	{
@@ -73,8 +82,12 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	ft_putnbr(getpid());
-	signal(SIGUSR1, receive_signal);
-	signal(SIGUSR2, receive_signal);
+	//signal(SIGUSR1, receive_signal);
+	//signal(SIGUSR2, receive_signal);
+	string.sa_flags = SA_SIGINFO;
+	string.sa_sigaction = &receive_signal;
+	sigaction(SIGUSR1, &string, NULL);
+	sigaction(SIGUSR2, &string, NULL);
 	while (1)
 	{
 	}
