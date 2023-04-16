@@ -6,7 +6,7 @@
 /*   By: wbousfir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 20:50:55 by wbousfir          #+#    #+#             */
-/*   Updated: 2023/04/16 18:50:23 by wbousfir         ###   ########.fr       */
+/*   Updated: 2023/04/16 21:32:23 by wbousfir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	main(int argc, char **argv)
 	{
 		if ((ft_check_pid(argv[1])) == 0)
 		{
-			write(1, "Error.pid, character in it\n", 27);
+			write(1, "Error.pid, character foundt\n", 26);
 			return (0);
 		}
 		else
