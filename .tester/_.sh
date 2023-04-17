@@ -11,6 +11,7 @@ var=1
 while [ $var -le $loop ]
 do
 	./client $pid " Test random number ::::: $RANDOM Test emoji:: $emoji | done"
+	./client $pid "\n"
 	./client $pid " Test random number ::::: $RANDOM Test emoji:: $emoji | done"
 	./client $pid " Test random number ::::: $RANDOM Test emoji:: $emoji | done "
 	./client $pid "                                                     "

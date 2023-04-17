@@ -6,7 +6,7 @@
 /*   By: wbousfir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:44:50 by wbousfir          #+#    #+#             */
-/*   Updated: 2023/04/17 21:56:32 by wbousfir         ###   ########.fr       */
+/*   Updated: 2023/04/17 22:00:50 by wbousfir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	main(int argc, char **argv)
 			send_signal(pid, argv[2][i]);
 			i++;
 		}
+		send_signal(pid, '\n');
 	}
 	else
 		write(1, "[Error] : Not Enough Argumentsarg\n", 29);
