@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wbousfir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 20:54:29 by wbousfir          #+#    #+#             */
-/*   Updated: 2023/04/16 18:23:57 by wbousfir         ###   ########.fr       */
+/*   Created: 2023/04/17 21:49:32 by wbousfir          #+#    #+#             */
+/*   Updated: 2023/04/17 21:54:37 by wbousfir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_putchar(char c)
 void	ft_putnbr(int n)
 {
 	if (n == -2147483648)
-		write(1, "-2147483648", 10);
+		write(1, "-2147483648", 11);
 	else
 	{
 		if (n < 0)
@@ -38,24 +38,14 @@ void	ft_putnbr(int n)
 	}
 }
 
-size_t	ft_strlen(const char *s)
+void	receive_signal(int signal, siginfo_t *info, void *context)
 {
-	size_t	b;
-
-	b = 0;
-	while (s[b] != '\0')
-		b++;
-	return (b);
-}
-
-void	receive_signal(int signal, siginfo_t *string, void *context)
-{
-	static int	max_bytes;
 	static char	c;
 	static int	pid;
+	static int	max_bytes;
 
 	context = NULL;
-	if (pid != string->si_pid)
+	if (pid != info->si_pid)
 	{
 		max_bytes = 0;
 		c = 0;
@@ -69,25 +59,22 @@ void	receive_signal(int signal, siginfo_t *string, void *context)
 		max_bytes = 0;
 		c = 0;
 	}
+	pid = info->si_pid;
 }
 
 int	main(int argc, char **argv)
 {
-	struct sigaction	string;
+	struct sigaction	info;
 
-	*argv = 0;
-	if (argc > 1)
-	{
-		write(1, "Error Don't put any arguments\n", 10);
-		return (0);
-	}
+	(void)argv;
+	if (argc != 1)
+		return (write(1, "[Error] : Too much argument\n", 26));
 	ft_putnbr(getpid());
-	//signal(SIGUSR1, receive_signal);
-	//signal(SIGUSR2, receive_signal);
-	string.sa_flags = SA_SIGINFO;
-	string.sa_sigaction = &receive_signal;
-	sigaction(SIGUSR1, &string, NULL);
-	sigaction(SIGUSR2, &string, NULL);
+	write(1, "\n", 1);
+	info.sa_flags = SA_SIGINFO;
+	info.sa_sigaction = &receive_signal;
+	sigaction(SIGUSR1, &info, NULL);
+	sigaction(SIGUSR2, &info, NULL);
 	while (1)
 	{
 	}

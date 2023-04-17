@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wbousfir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 20:50:55 by wbousfir          #+#    #+#             */
-/*   Updated: 2023/04/16 21:32:23 by wbousfir         ###   ########.fr       */
+/*   Created: 2023/04/17 21:44:50 by wbousfir          #+#    #+#             */
+/*   Updated: 2023/04/17 21:56:32 by wbousfir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@
 
 int	ft_check_pid(char *str)
 {
-	int i;
-	int check;
+	int	i;
+	int	check;
 
 	i = 0;
 	check = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] > 49 && str[i] < 57)
+		if (str[i] >= 48 && str[i] <= 57)
 			check = 1;
 		else
 		{
 			check = 0;
-			break;
-		}	
+			break ;
+		}
 		i++;
 	}
-	return(check);
+	return (check);
 }
 
 int	ft_atoi(const char *str)
@@ -60,49 +60,46 @@ int	ft_atoi(const char *str)
 	return (a * y);
 }
 
-void	send_signal(int c, int pid)
+void	send_signal(int pid, char c)
 {
-	int	bit;
+	int	max_bytes;
 
-	bit = 0;
-	while (bit < 8)
+	max_bytes = 0;
+	while (max_bytes < 8)
 	{
-		if ((c & (0x01 << bit)) != 0)
+		if ((c & (1 << max_bytes)) != 0)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
 		usleep(500);
-		bit++;
+		max_bytes++;
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	int	x;
-	int pid;
+	int	pid;
+	int	i;
 
-	x = 0;
+	i = 0;
 	if (argc == 3)
 	{
+		pid = ft_atoi(argv[1]);
+		if (pid < 3)
+			return (write(1, "[Error] : PID Permission Denied\n", 32));
 		if ((ft_check_pid(argv[1])) == 0)
 		{
-			write(1, "Error.pid, character foundt\n", 26);
+			write(1, "[Error] : Character found in PID\n", 33);
 			return (0);
 		}
-		else
+		while (argv[2][i] != '\0')
 		{
-			pid = ft_atoi(argv[1]);
-			if (pid < 3)
-				return (write(1, "Error.pid\n", 10));
-			while (argv[2][x] != '\0')
-			{
-				send_signal((int)argv[2][x], ft_atoi(argv[1]));
-				x++;
-			}
-			send_signal('\n', ft_atoi(argv[1]));
+			send_signal(pid, argv[2][i]);
+			i++;
 		}
 	}
 	else
-		write(1, "Failed not enough argument", 26);
+		write(1, "[Error] : Not Enough Argumentsarg\n", 29);
 	return (0);
 }
+
