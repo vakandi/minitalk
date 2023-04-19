@@ -6,7 +6,7 @@
 /*   By: wbousfir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:44:50 by wbousfir          #+#    #+#             */
-/*   Updated: 2023/04/17 22:00:50 by wbousfir         ###   ########.fr       */
+/*   Updated: 2023/04/17 22:01:46 by wbousfir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,3 @@ int	main(int argc, char **argv)
 		write(1, "[Error] : Not Enough Argumentsarg\n", 29);
 	return (0);
 }
-
